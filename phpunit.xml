@@ -1,0 +1,21 @@
+<phpunit  bootstrap="vendor/autoload.php"
+          colors="true"
+          convertErrorsToExceptions="true"
+          convertNoticesToExceptions="true"
+          convertWarningsToExceptions="true"
+          processIsolation="false"
+          stopOnFailure="false"
+          syntaxCheck="false"
+>
+  <testsuites>
+    <testsuite name="App Tests">
+        <directory>phpUnit</directory>
+    </testsuite>
+  </testsuites>
+  <groups>
+      <exclude>
+          <group>useCase</group>
+          <group>fuzzTest</group>
+      </exclude>
+  </groups>
+</phpunit>

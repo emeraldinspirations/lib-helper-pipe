@@ -1,0 +1,22 @@
+{
+    "name": "emeraldinspirations/lib-objectdesignpattern-pipe",
+    "description": "A PHP implementation of the Shell Pipe (|) concept",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthew \"Juniper\" Barlett",
+            "email": "emeraldinspirations@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "emeraldinspirations\\library\\objectDesignPattern\\pipe\\": "src/"
+        }
+    },
+    "require-dev": {
+    }
+}
