@@ -43,4 +43,26 @@ class PipeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Verify getParams returns array passed at construct
+     *
+     * @return void
+     */
+    public function testGetParams()
+    {
+        
+        $this->assertEquals(
+            [],
+            (new Pipe())->getParams(),
+            'Fails if function undefined or returns value when none passed'
+        );
+
+        $this->assertEquals(
+            [1,2,3],
+            (new Pipe(1, 2, 3))->getParams(),
+            'Fails if passed params not retained and returned'
+        );
+
+    }
+
 }

@@ -28,5 +28,28 @@ namespace emeraldinspirations\library\objectDesignPattern\pipe;
  */
 class Pipe
 {
-    
+    protected $Params;
+
+    /**
+     * Return parameters passed at construct
+     *
+     * @return array
+     */
+    public function getParams() : array
+    {
+        return $this->Params;
+    }
+
+    /**
+     * Construct a new pipe
+     *
+     * @param mixed ...$Params The params to pass to the first callable
+     *
+     * @return void
+     */
+    public function __construct(...$Params)
+    {
+        $this->Params = $Params;
+    }
+
 }
