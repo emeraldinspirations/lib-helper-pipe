@@ -14,9 +14,20 @@ PHP does not yet have a syntax for piping the output of one function into the in
 ```php
 <?php
 
-return implode('', array_reverse(str_split(strtoupper('test string'))));
-
-// Returns "GNIRTS TSET"
+return new \ArrayObject(
+    [
+        implode(
+            '',
+            array_reverse(
+                str_split(
+                    strtoupper(
+                        'test string'
+                    )
+                )
+            )
+        )
+    ]
+);
 ```
 
 This is messy, and hard to read.  Plus it puts the functions in reverse order.
@@ -33,10 +44,7 @@ return (new Pipe('test string'))
     ->thenTo('str_split')
     ->thenTo('array_reverse')
     ->thenTo(
-        Pipe::delegateWithParamMask(
-            ['', Pipe::here()],
-            'implode'
-        )
+        Pipe::delegateWithParamMask('implode', ['', Pipe::here()])
     )
     ->thenTo(
         function ($Param) {
@@ -47,14 +55,6 @@ return (new Pipe('test string'))
         Pipe::delegateConstructor(\ArrayObject::class)
     )
     ->return();
-
-// Returns ArrayObject Object
-//  (
-//      [storage:ArrayObject:private] => Array
-//          (
-//              [0] => GNIRTS TSET
-//          )
-//  )
 ```
 
 ## Installing / Getting started

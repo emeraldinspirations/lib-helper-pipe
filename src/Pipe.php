@@ -106,17 +106,17 @@ class Pipe
      *  // Returns: "1_2_3"
      * </code>
      *
+     * @param callable $Function      The function to pass the parameters to
      * @param array    $ParameterMask Array of parameters, use `self::here()`
      *        for input from pipe
-     * @param callable $Function      The function to pass the parameters to
      *
      * @see self::here() Token representing the input from the pipe
      *
      * @return callable
      */
     static function delegateWithParamMask(
-        array $ParameterMask,
-        callable $Function
+        callable $Function,
+        array $ParameterMask
     ) : callable {
         return function ($Parameter) use ($ParameterMask, $Function) {
             $HereToken = self::here();
@@ -146,11 +146,14 @@ class Pipe
      * function that fulfills the callable need and runs the relevant
      * constructor.
      *
+     * @param string $Class The full name of the class to be constructed (use
+     *        ::class)
+     *
      * @todo Merge with emeraldinspirations/lib-createconstructcallable
-     * This code does duplicate a function in the above package, and therefore
-     * violates the DRY principle.  Either this package should require the
-     * above package, or the above package should be deprecated in favor of
-     * this function.
+     *       This code duplicates a function in the aforereferenced package,
+     *       and therefore violates the DRY principle.  Either this package
+     *       should require the above package, or the above package should be
+     *       deprecated in favor of this function.
      *
      * @return callable
      */

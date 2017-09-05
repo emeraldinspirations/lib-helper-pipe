@@ -206,8 +206,8 @@ class PipeTest extends \PHPUnit_Framework_TestCase
             ->thenTo('array_reverse')
             ->thenTo(
                 Pipe::delegateWithParamMask(
-                    ['', Pipe::here()],
-                    'implode'
+                    'implode',
+                    ['', Pipe::here()]
                 )
             )
             ->thenTo(
@@ -270,10 +270,10 @@ class PipeTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(
             is_callable(
                 $Actual = Pipe::delegateWithParamMask(
-                    ['A', Pipe::here(), 'C', Pipe::here()],
                     function (...$Params) : array {
                         return $Params;
-                    }
+                    },
+                    ['A', Pipe::here(), 'C', Pipe::here()]
                 )
             ),
             'Fails if function undefined or returs non callable'
