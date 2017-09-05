@@ -1,5 +1,5 @@
 {
-    "name": "emeraldinspirations/lib-objectdesignpattern-pipe",
+    "name": "emeraldinspirations/lib-helper-pipe",
     "description": "A PHP implementation of the Shell Pipe (|) concept",
     "type": "library",
     "license": "MIT",
@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "emeraldinspirations\\library\\objectDesignPattern\\pipe\\": "src/"
+            "emeraldinspirations\\library\\helper\\pipe\\": "src/"
         }
     },
     "require-dev": {

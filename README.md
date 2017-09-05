@@ -1,6 +1,6 @@
 ![emeraldinspirations logo](http://vps56132.vps.ovh.ca/logo.gitHub.png)
-# lib-objectdesignpattern-pipe
-> A component of  [emeraldinspiration](https://github.com/emeraldinspirations)'s [library](https://github.com/emeraldinspirations/library).
+# lib-helper-pipe
+> A helper in [emeraldinspiration](https://github.com/emeraldinspirations)'s [library](https://github.com/emeraldinspirations/library).
 
 A PHP implementation of the Shell Pipe `|` concept
 
@@ -25,6 +25,8 @@ This class provides an alternate option.  It allows using the `this` function to
 
 ```php
 <?php
+
+use emeraldinspirations\library\helper\pipe\Pipe;
 
 return (new Pipe('test string'))
     ->to('strtoupper')
