@@ -48,7 +48,7 @@ This project has no dependencies, so can simply be required with
 [composer](https://getcomposer.org/)
 
 ```shell
-composer require emeraldinspirations/lib-objectdesignpattern-pipe
+composer require emeraldinspirations/lib-helper-pipe
 ```
 
 ## Future Features
