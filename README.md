@@ -33,13 +33,28 @@ return (new Pipe('test string'))
     ->thenTo('str_split')
     ->thenTo('array_reverse')
     ->thenTo(
-        function (array $Array) {
-            return implode('', $Array);
+        Pipe::delegateWithParamMask(
+            ['', Pipe::here()],
+            'implode'
+        )
+    )
+    ->thenTo(
+        function ($Param) {
+            return [$Param];
         }
+    )
+    ->thenTo(
+        Pipe::delegateConstructor(\ArrayObject::class)
     )
     ->return();
 
-// Returns "GNIRTS TSET"
+// Returns ArrayObject Object
+//  (
+//      [storage:ArrayObject:private] => Array
+//          (
+//              [0] => GNIRTS TSET
+//          )
+//  )
 ```
 
 ## Installing / Getting started

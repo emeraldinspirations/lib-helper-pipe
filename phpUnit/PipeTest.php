@@ -205,14 +205,23 @@ class PipeTest extends \PHPUnit_Framework_TestCase
             ->thenTo('str_split')
             ->thenTo('array_reverse')
             ->thenTo(
-                function (array $Array) {
-                    return implode('', $Array);
+                Pipe::delegateWithParamMask(
+                    ['', Pipe::here()],
+                    'implode'
+                )
+            )
+            ->thenTo(
+                function ($Param) {
+                    return [$Param];
                 }
+            )
+            ->thenTo(
+                Pipe::delegateConstructor(\ArrayObject::class)
             )
             ->return();
 
         $this->assertEquals(
-            'GNIRTS TSET',
+            new \ArrayObject(['GNIRTS TSET']),
             $Actual
         );
 
