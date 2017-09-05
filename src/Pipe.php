@@ -18,7 +18,7 @@ namespace emeraldinspirations\library\objectDesignPattern\pipe;
 /**
  * Pipe the output of each callable to the next one
  *
- * @costPomodoro 3 2017-09-04
+ * @costPomodoro 4 2017-09-04
  *
  * @category  Library
  * @package   ObjectDesignPattern-Pipe
@@ -90,7 +90,7 @@ class Pipe
      *
      * @return self
      */
-    public function then(callable $Function) : self
+    public function thenTo(callable $Function) : self
     {
         $Return = new Pipe();
         $Return->Return = $Function(...[$this->Return]);

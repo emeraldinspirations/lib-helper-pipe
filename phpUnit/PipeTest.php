@@ -66,16 +66,16 @@ class PipeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Verify`then` runs callable, stores return, returns new pipe
+     * Verify`thenTo` runs callable, stores return, returns new pipe
      *
      * @return void
      */
-    public function testThen()
+    public function testThenTo()
     {
 
         $this->assertInstanceOf(
             Pipe::class,
-            $Actual = ($Object = new Pipe())->to()->then(
+            $Actual = ($Object = new Pipe())->to()->thenTo(
                 function () {
                 }
             ),
@@ -91,7 +91,7 @@ class PipeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             $NewValue = 'NewValue',
             (
-                $NewObject = $Object->then(
+                $NewObject = $Object->thenTo(
                     function () use ($NewValue) {
                         return $NewValue;
                     }
@@ -186,9 +186,9 @@ class PipeTest extends \PHPUnit_Framework_TestCase
 
         $Actual = (new Pipe('test string'))
             ->to('strtoupper')
-            ->then('str_split')
-            ->then('array_reverse')
-            ->then(
+            ->thenTo('str_split')
+            ->thenTo('array_reverse')
+            ->thenTo(
                 function (array $Array) {
                     return implode('', $Array);
                 }
