@@ -18,7 +18,7 @@ namespace emeraldinspirations\library\objectDesignPattern\pipe;
 /**
  * Pipe the output of each callable to the next one
  *
- * @costPomodoro 2 2017-09-04
+ * @costPomodoro 3 2017-09-04
  *
  * @category  Library
  * @package   ObjectDesignPattern-Pipe
@@ -58,14 +58,17 @@ class Pipe
     /**
      * Return this after running callable with params
      *
-     * @param callable $Function The function to pass the parameters to and
-     *        retain the input from
+     * @param callable $Function (optional) The function to pass the parameters
+     *        to and retain the input from
      *
      * @return $this
      */
-    public function to(callable $Function) : Pipe
+    public function to(callable $Function = null) : Pipe
     {
-        $this->Return = $Function(...$this->Params);
+        $this->Return = is_null($Function)
+            ? $this->Params
+            : $Function(...$this->Params);
+
         return $this;
     }
 
@@ -79,14 +82,20 @@ class Pipe
         return $this->Return;
     }
 
-    // /**
-    //  * Return new Pipe object
-    //  *
-    //  * @return self
-    //  */
-    // public function then() : self
-    // {
-    //     return new Pipe();
-    // }
+    /**
+     * Return new Pipe object after running callable with params
+     *
+     * @param callable $Function (optional) The function to pass the parameters
+     *        to and retain the input from
+     *
+     * @return self
+     */
+    public function then(callable $Function) : self
+    {
+        $Return = new Pipe();
+        $Return->Return = $Function(...[$this->Return]);
+        $Return->Params = [$Return->Return];
+        return $Return;
+    }
 
 }

@@ -65,25 +65,48 @@ class PipeTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    // /**
-    //  * Verify returns new pipe
-    //  *
-    //  * @return void
-    //  */
-    // public function testThen()
-    // {
-    //     $this->assertInstanceOf(
-    //         Pipe::class,
-    //         $Actual = ($Object = new Pipe())->then(),
-    //         'Fails if function undefined'
-    //     );
-    //
-    //     $this->assertNotSame(
-    //         $Object,
-    //         $Actual,
-    //         'Fails if returns self'
-    //     );
-    // }
+    /**
+     * Verify`then` runs callable, stores return, returns new pipe
+     *
+     * @return void
+     */
+    public function testThen()
+    {
+
+        $this->assertInstanceOf(
+            Pipe::class,
+            $Actual = ($Object = new Pipe())->to()->then(
+                function () {
+                }
+            ),
+            'Fails if function undefined'
+        );
+
+        $this->assertNotSame(
+            $Object,
+            $Actual,
+            'Fails if returns same instance'
+        );
+
+        $this->assertEquals(
+            $NewValue = 'NewValue',
+            (
+                $NewObject = $Object->then(
+                    function () use ($NewValue) {
+                        return $NewValue;
+                    }
+                )
+            )->return(),
+            'Fails if callable not run or value not retained'
+        );
+
+        $this->assertEquals(
+            [$NewValue],
+            $NewObject->getParams(),
+            'Fails if parameters not passed to new object'
+        );
+
+    }
 
     /**
      * Verify: `to` runs callable, stores return; `return` returns result
@@ -149,6 +172,32 @@ class PipeTest extends \PHPUnit_Framework_TestCase
             $OverrridenValue,
             $Object->return(),
             'Fails if return value not overriden with subsiquent to calls'
+        );
+
+    }
+
+    /**
+     * Verify with a practical example
+     *
+     * @return void
+     */
+    public function testPractical()
+    {
+
+        $Actual = (new Pipe('test string'))
+            ->to('strtoupper')
+            ->then('str_split')
+            ->then('array_reverse')
+            ->then(
+                function (array $Array) {
+                    return implode('', $Array);
+                }
+            )
+            ->return();
+
+        $this->assertEquals(
+            'GNIRTS TSET',
+            $Actual
         );
 
     }
