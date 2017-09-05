@@ -18,6 +18,8 @@ namespace emeraldinspirations\library\objectDesignPattern\pipe;
 /**
  * Pipe the output of each callable to the next one
  *
+ * @costPomodoro 2 2017-09-04
+ *
  * @category  Library
  * @package   ObjectDesignPattern-Pipe
  * @author    Matthew "Juniper" Barlett <emeraldinspirations@gmail.com>
@@ -29,6 +31,7 @@ namespace emeraldinspirations\library\objectDesignPattern\pipe;
 class Pipe
 {
     protected $Params;
+    protected $Return;
 
     /**
      * Return parameters passed at construct
@@ -51,5 +54,39 @@ class Pipe
     {
         $this->Params = $Params;
     }
+
+    /**
+     * Return this after running callable with params
+     *
+     * @param callable $Function The function to pass the parameters to and
+     *        retain the input from
+     *
+     * @return $this
+     */
+    public function to(callable $Function) : Pipe
+    {
+        $this->Return = $Function(...$this->Params);
+        return $this;
+    }
+
+    /**
+     * Return the results of running the callable
+     *
+     * @return mixed
+     */
+    public function return()
+    {
+        return $this->Return;
+    }
+
+    // /**
+    //  * Return new Pipe object
+    //  *
+    //  * @return self
+    //  */
+    // public function then() : self
+    // {
+    //     return new Pipe();
+    // }
 
 }
