@@ -97,6 +97,45 @@ class Pipe
     }
 
     /**
+     * Return callable that routs pipe to parameters per mask
+     *
+     * Example:
+     * <code>
+     *  $callable = delegateWithParamMask(['_', Pipe::here()], 'implode');
+     *  return $callable([1, 2, 3]);
+     *  // Returns: "1_2_3"
+     * </code>
+     *
+     * @param array    $ParameterMask Array of parameters, use `self::here()`
+     *        for input from pipe
+     * @param callable $Function      The function to pass the parameters to
+     *
+     * @see self::here() Token representing the input from the pipe
+     *
+     * @return callable
+     */
+    static function delegateWithParamMask(
+        array $ParameterMask,
+        callable $Function
+    ) : callable {
+        return function ($Parameter) use ($ParameterMask, $Function) {
+            $HereToken = self::here();
+
+            $PostMaskParams = array_map(
+                function ($Element) use ($HereToken, $Parameter) {
+                    if ($Element === $HereToken) {
+                        return $Parameter;
+                    }
+                    return $Element;
+                },
+                $ParameterMask
+            );
+
+            return $Function(...$PostMaskParams);
+        };
+    }
+
+    /**
      * Return anonymous function that calls a class constructor
      *
      * PHP does not yet have a syntax for creating a callable for the

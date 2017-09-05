@@ -250,12 +250,40 @@ class PipeTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Verify `delegateWithParamMask` returns callable
+     *
+     * @return void
+     */
+    public function testDelegateWithParamMask()
+    {
+
+        $this->assertTrue(
+            is_callable(
+                $Actual = Pipe::delegateWithParamMask(
+                    ['A', Pipe::here(), 'C', Pipe::here()],
+                    function (...$Params) : array {
+                        return $Params;
+                    }
+                )
+            ),
+            'Fails if function undefined or returs non callable'
+        );
+
+        $this->assertEquals(
+            ['A', 'B', 'C', 'B'],
+            $Actual('B'),
+            'Fails if mask not functioning'
+        );
+
+    }
+
 }
 
 /**
  * Dummy Constructable Class
  *
- * As of PHP 7, anonymous classes MUST be constructed at the point they are 
+ * As of PHP 7, anonymous classes MUST be constructed at the point they are
  * defined, and therefore are unavailable as constructible mock objects.  This
  * is an acceptable exception to the
  * [PSR 1](http://www.php-fig.org/psr/psr-1/#namespace-and-class-names)
