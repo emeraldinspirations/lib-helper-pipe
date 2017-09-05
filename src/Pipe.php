@@ -96,4 +96,17 @@ class Pipe
         return $Return;
     }
 
+    /**
+     * Return singleton token representing the return value of previous function
+     *
+     * @see self::thenTo Where token is used
+     *
+     * @return mixed
+     */
+    static function here()
+    {
+        static $Singleton;
+        return $Singleton ?? $Singleton = new \stdClass();
+    }
+
 }

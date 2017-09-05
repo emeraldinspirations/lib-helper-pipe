@@ -109,6 +109,22 @@ class PipeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verify Here singleton is returned
+     *
+     * @return void
+     */
+    public function testHere()
+    {
+
+        $this->assertSame(
+            Pipe::here(),
+            Pipe::here(),
+            'Fails if singleton object not returned'
+        );
+
+    }
+
+    /**
      * Verify: `to` runs callable, stores return; `return` returns result
      *
      * @return void
