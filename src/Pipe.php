@@ -97,6 +97,32 @@ class Pipe
     }
 
     /**
+     * Return anonymous function that calls a class constructor
+     *
+     * PHP does not yet have a syntax for creating a callable for the
+     * constructor of a class.  Some workarounds involve using
+     * ReflectionClass.  Example: https://stackoverflow.com/q/24129450/6699286
+     *
+     * This function provides an alternate option.  In creates an anonymous
+     * function that fulfills the callable need and runs the relevant
+     * constructor.
+     *
+     * @todo Merge with emeraldinspirations/lib-createconstructcallable
+     * This code does duplicate a function in the above package, and therefore
+     * violates the DRY principle.  Either this package should require the
+     * above package, or the above package should be deprecated in favor of
+     * this function.
+     *
+     * @return callable
+     */
+    static function delegateConstructor(string $Class) : callable
+    {
+        return function (...$Params) use ($Class) {
+            return new $Class(...$Params);
+        };
+    }
+
+    /**
      * Return singleton token representing the return value of previous function
      *
      * @see self::thenTo Where token is used

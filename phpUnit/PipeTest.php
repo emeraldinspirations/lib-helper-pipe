@@ -218,4 +218,63 @@ class PipeTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    /**
+     * Verify `delegateConstructor` returns function calling class constructor
+     *
+     * @return void
+     */
+    public function testDelegateConstructor()
+    {
+        $this->assertTrue(
+            is_callable(
+                $Actual = Pipe::delegateConstructor(
+                    PipeDummyConstructableClass::class
+                )
+            ),
+            'Fails if function undefined or returs non callable'
+        );
+
+        $ExpectedParams = ['Param1', 'Param2', 'Param3'];
+
+        $this->assertInstanceOf(
+            PipeDummyConstructableClass::class,
+            $NewClass = $Actual(...$ExpectedParams),
+            'Fails if constructor returns wrong type'
+        );
+
+        $this->assertEquals(
+            $ExpectedParams,
+            $NewClass->Params,
+            'Fails if params not passed to constructor'
+        );
+
+    }
+
+}
+
+/**
+ * Dummy Constructable Class
+ *
+ * As of PHP 7, anonymous classes MUST be constructed at the point they are 
+ * defined, and therefore are unavailable as constructible mock objects.  This
+ * is an acceptable exception to the
+ * [PSR 1](http://www.php-fig.org/psr/psr-1/#namespace-and-class-names)
+ * rule that "... each class is in a file by itself ...", as this class is ONLY
+ * used in the context of `PipeTest` and NEVER auto-loaded or exposed to
+ * production code.
+ *
+ * @category  Library
+ * @package   Helper-Pipe
+ * @author    Matthew "Juniper" Barlett <emeraldinspirations@gmail.com>
+ * @copyright 2017 Matthew "Juniper" Barlett <emeraldinspirations@gmail.com>
+ * @license   MIT ../LICENSE.md
+ * @version   GIT: $Id$ In Development.
+ * @link      https://github.com/emeraldinspirations/lib-objectdesignpattern-pipe
+ */
+class PipeDummyConstructableClass
+{
+    public function __construct(...$Params)
+    {
+        $this->Params = $Params;
+    }
 }
