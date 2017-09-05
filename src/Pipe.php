@@ -18,8 +18,6 @@ namespace emeraldinspirations\library\objectDesignPattern\pipe;
 /**
  * Pipe the output of each callable to the next one
  *
- * @costPomodoro 4 2017-09-04
- *
  * @category  Library
  * @package   ObjectDesignPattern-Pipe
  * @author    Matthew "Juniper" Barlett <emeraldinspirations@gmail.com>
